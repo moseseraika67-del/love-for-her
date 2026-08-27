@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love For You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: float 6s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            animation: glow 2s ease-in-out infinite;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(102, 126, 234, 0.8);
+            }
+        }
+
+        .message {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: #333;
+            margin-bottom: 40px;
+            font-style: italic;
+            text-align: center;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .images-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .image-card {
+            position: relative;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: popUp 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+        }
+
+        .image-card:nth-child(1) { animation-delay: 0.2s; }
+        .image-card:nth-child(2) { animation-delay: 0.4s; }
+        .image-card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes popUp {
+            from {
+                opacity: 0;
+                transform: scale(0.5) rotateY(90deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        .image-card:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.4);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.6), rgba(118, 75, 162, 0.6));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay-text {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .button-container {
+            margin-top: 40px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            margin: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .signature {
+            margin-top: 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .message {
+                font-size: 1.1rem;
+            }
+
+            .images-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-bg" id="heartBg"></div>
+
+    <div class="container">
+        <h1>💕 My Love For You 💕</h1>
+
+        <div class="message">
+            "From the moment I met you, my heart knew it had found its home. Every day with you is a beautiful adventure, 
+            and every moment spent in your presence feels like a dream come true. You are my sunshine on cloudy days, 
+            my strength when I'm weak, and my reason to smile every single day. Your laugh is my favorite melody, 
+            your smile is my favorite view, and your love is my greatest blessing. I fall for you more and more with each 
+            passing day, and I can't wait to spend forever creating beautiful memories with you. You are my today and 
+            all of my tomorrows. I love you with all my heart, now and always. 💕"
+        </div>
+
+        <div class="images-container">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop" alt="Beautiful moment">
+                <div class="overlay">
+                    <div class="overlay-text">Forever & Always</div>
+                </div>
+            </div>
+
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1534528741775-53a8323c42d5?w=400&h=400&fit=crop" alt="Beautiful you">
+                <div class="overlay">
+                    <div class="overlay-text">You Light Up My Life</div>
+                </div>
+            </div>
+
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop" alt="Our love">
+                <div class="overlay">
+                    <div class="overlay-text">My Heart is Yours</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button onclick="createConfetti()">🎉 Celebrate Our Love</button>
+            <button onclick="playMusic()">🎵 Play Love Song</button>
+        </div>
+
+        <div class="signature">
+            With all my love,<br>
+            <span style="font-size: 2rem;">💘</span><br>
+            Forever Yours
+        </div>
+    </div>
+
+    <script>
+        // Generate floating hearts
+        function generateHearts() {
+            const heartBg = document.getElementById('heartBg');
+            const hearts = ['❤️', '💕', '💖', '💗', '💓'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heartBg.appendChild(heart);
+            }
+        }
+
+        // Create confetti explosion
+        function createConfetti() {
+            const colors = ['#667eea', '#764ba2', '#ff69b4', '#ff1493', '#ffb6c1'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.textContent = ['💕', '✨', '💖', '🎉', '⭐'][Math.floor(Math.random() * 5)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.fontSize = Math.random() * 20 + 20 + 'px';
+                confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+                document.body.appendChild(confetti);
+
+                let top = 0;
+                let left = parseFloat(confetti.style.left);
+                const speed = Math.random() * 5 + 3;
+                const drift = Math.random() * 2 - 1;
+
+                const fall = setInterval(() => {
+                    top += speed;
+                    left += drift;
+                    confetti.style.top = top + 'px';
+                    confetti.style.left = left + 'vw';
+                    confetti.style.opacity = 1 - (top / window.innerHeight);
+                    confetti.style.transform = `rotate(${top}deg)`;
+
+                    if (top > window.innerHeight) {
+                        clearInterval(fall);
+                        confetti.remove();
+                    }
+                }, 10);
+            }
+        }
+
+        // Play background music
+        function playMusic() {
+            alert('🎵 Love Song Playing!\n\nIn a real version, beautiful romantic music would play here!\n\nFor now, play your favorite love song and let it fill your heart. 💕');
+        }
+
+        // Initialize
+        generateHearts();
+    </script>
+</body>
+</html>
